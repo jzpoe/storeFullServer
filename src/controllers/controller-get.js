@@ -33,21 +33,30 @@ cloudinary.config({
       
     });
 
-router.get('/api/render', async (req, res) => {
-    try {
-      // Utiliza el método `search` de Cloudinary para obtener todas las imágenes
-      const result = await cloudinary.search
-        .expression('folder:STORE') // Filtra por la carpeta 'STORE'
-        .execute();
-  
-      // Extrae las URLs de las imágenes de los resultados
-      const imageUrls = result.resources.map(resource => resource.url);
-  
-      res.json(imageUrls); // Devuelve las URLs de las imágenes al cliente
-    } catch (error) {
-      console.error('Error al obtener las imágenes:', error);
-      res.status(500).json({ message: 'Error al obtener las imágenes' });
-    }
-  });
+    router.get('/api/render', async (req, res) => {
+        try {
+            // Utiliza el método `search` de Cloudinary para obtener todas las imágenes
+            const result = await cloudinary.search
+                .expression('folder:STORE') // Filtra por la carpeta 'STORE'
+                .execute();
+    
+            // Mapear los recursos de Cloudinary a objetos con URL e información adicional
+            const imagesData = result.resources.map(resource => {
+                return {
+                    url: resource.url,
+                    description: resource.public_id, // Puedes usar cualquier otra propiedad como descripción
+                    // Agrega más propiedades si es necesario, como tamaño, fecha de creación, etc.
+                };
+            });
+    
+            console.log(imagesData); // Solo para depuración
+    
+            // Devuelve los datos de las imágenes al cliente
+            res.json(imagesData);
+        } catch (error) {
+            console.error('Error al obtener las imágenes:', error);
+            res.status(500).json({ message: 'Error al obtener las imágenes' });
+        }
+    });
 
   module.exports = router;

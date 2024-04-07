@@ -5,6 +5,7 @@ const Image = require("../model/model-image");
 const express = require('express');
 const router = express.Router();
 const cloudinary = require("cloudinary").v2
+const fs = require("fs-extra");
 
 
 const upload = multer({dest:'uploads'})
@@ -19,16 +20,20 @@ router.post('/api/upload', upload.single('image'), async  (req, res) => {
     });
 
     console.log('Descripción de la imagen:', description);
-    console.log('URL de la imagen:', result.secure_url);
+    console.log('URL de la imagen:', result);
     console.log('ruta fle:', req.file);
 
     const newImage = new Image({
       description: description,
+      imageUrl: result.url,
+      public_id: result.public_id
+
     });
 
     await newImage.save();
+    await fs.unlink(req.file.path)
 
-    res.status(200).json({ imageUrl: result.secure_url, message: 'Imagen subida correctamente' });
+    res.status(200).json({ imageUrl: result, message: 'Imagen subida correctamente' });
   } catch (error) {
     console.error('Error al subir la imagen:', error);
     res.status(500).json({ message: 'Error al subir la imagen' });
