@@ -14,7 +14,7 @@ const imageSchema = new mongoose.Schema({
   // URL de la imagen (obligatorio)
   imageUrl: {
     type: String,
-    required: true
+    //required: true
   },
   // Fecha de creación de la imagen (automática)
   createdAt: {

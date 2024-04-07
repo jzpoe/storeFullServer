@@ -1,30 +1,38 @@
 
 
+const multer = require("multer");
 const Image = require("../model/model-image");
+const express = require('express');
+const router = express.Router();
+const cloudinary = require("cloudinary").v2
 
-const uploadImg = async (req, res) => {
+
+const upload = multer({dest:'uploads'})
+
+router.post('/api/upload', upload.single('image'), async  (req, res) => {
   try {
-    let { description } = req.body; // Obtener la descripción desde el cuerpo de la solicitud
-    let imageUrl = req.file.path; // Obtener la ruta de la imagen subida
+    let { description } = req.body;
+    const bufferStream = req.file.path; // El buffer de la imagen
 
+    const result = await cloudinary.uploader.upload(bufferStream, { // Pasar el buffer directamente
+      folder: 'STORE'
+    });
 
     console.log('Descripción de la imagen:', description);
-    console.log('direccion de la imagen:', imageUrl);
-
+    console.log('URL de la imagen:', result.secure_url);
+    console.log('ruta fle:', req.file);
 
     const newImage = new Image({
       description: description,
-      imageUrl: imageUrl, // Utiliza 'path' directamente para la URL de la imagen
-      size: req.file.size // Añade el tamaño de la imagen si lo necesitas
-
     });
+
     await newImage.save();
 
-    res.status(200).json({ message: 'Imagen subida correctamente' });
+    res.status(200).json({ imageUrl: result.secure_url, message: 'Imagen subida correctamente' });
   } catch (error) {
     console.error('Error al subir la imagen:', error);
     res.status(500).json({ message: 'Error al subir la imagen' });
   }
-};
+});
+module.exports = router;
 
-module.exports = uploadImg;

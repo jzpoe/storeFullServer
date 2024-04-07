@@ -4,8 +4,8 @@ const app= express()
 const cors = require('cors')
 const path = require('path');
 const mongoose= require('./src/mongo/database')
-const metodPost = require('./src/routes/route-post')
-const renderImagenes = require('./src/routes/route-post')
+const metodPost = require('./src/controllers/controller-update')
+const renderImagenes = require('./src/controllers/controller-get')
 const deleteImages = require('./src/routes/route-post')
 const port = process.env.PORT;
 
