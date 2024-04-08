@@ -1,10 +1,23 @@
+require('dotenv').config({ path: '../.env' });
+const cloudinary = require('cloudinary').v2;
 const Image = require("../model/model-image");
 
+
+
+cloudinary.config({
+    
+  cloud_name: process.env.cloud_name,
+  api_key: process.env.api_key,
+  api_secret: process.env.api_secret
+
+  
+});
+
 const deleteImage = async (req, res) => {
-  const userID = req.params.id;
+  const userID = req.query;
 
   try {
-    const deleteUser = await Image.findOneAndDelete(userID);
+    const deleteUser = await cloudinary.uploader.destroy(userID);
     if (!deleteUser) {
       return res.status(404).json({ error: "Usuario no encontrado" });
     }
