@@ -21,6 +21,7 @@
 const express = require('express');
 const router = express.Router();
 const cloudinary = require('cloudinary').v2;
+const Text = require("../model/model-text")
 require('dotenv').config({ path: '../.env' });
 
 
@@ -39,6 +40,9 @@ cloudinary.config({
             const result = await cloudinary.search
                 .expression('folder:STORE') // Filtra por la carpeta 'STORE'
                 .execute();
+
+                const textoDescription = await Text.find()
+                
     
             // Mapear los recursos de Cloudinary a objetos con URL e información adicional
             const imagesData = result.resources.map(resource => {
@@ -53,6 +57,7 @@ cloudinary.config({
     
             // Devuelve los datos de las imágenes al cliente
             res.json(imagesData);
+            res.json(textoDescription)
         } catch (error) {
             console.error('Error al obtener las imágenes:', error);
             res.status(500).json({ message: 'Error al obtener las imágenes' });

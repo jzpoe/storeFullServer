@@ -1,10 +1,11 @@
 
 
 const multer = require("multer");
-const Image = require("../model/model-image");
+const Image = require("../model/model-text");
 const express = require('express');
 const router = express.Router();
 const cloudinary = require("cloudinary").v2
+const Text = require("../model/model-text")
 const fs = require("fs-extra");
 
 
@@ -24,13 +25,17 @@ router.post('/api/upload', upload.single('image'), async  (req, res) => {
     console.log('ruta fle:', req.file);
 
     const newImage = new Image({
-      description: description,
       imageUrl: result.url,
       public_id: result.public_id
 
     });
 
+    const newText = new Text({
+      description: description
+    })
+    
     await newImage.save();
+    await newText.save()
     await fs.unlink(req.file.path)
 
     res.status(200).json({ imageUrl: result, message: 'Imagen subida correctamente' });

@@ -1,6 +1,6 @@
 require('dotenv').config({ path: '../.env' });
 const cloudinary = require('cloudinary').v2;
-const Image = require("../model/model-image");
+const Image = require("../model/model-text");
 
 
 

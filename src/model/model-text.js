@@ -1,6 +1,8 @@
+
+
 const mongoose = require('mongoose');
 
-const imageSchema = new mongoose.Schema({
+const TextSchema = new mongoose.Schema({
   // Nombre de la imagen (opcional)
   name: {
     type: String,
@@ -11,11 +13,15 @@ const imageSchema = new mongoose.Schema({
     type: String,
     required: false
   },
-  // URL de la imagen (obligatorio)
-  imageUrl: {
+  price:{
     type: String,
-    //required: true
+    required: false
   },
+  // URL de la imagen (obligatorio)
+  //imageUrl: {
+    //type: String,
+    //required: true
+  //},
   // Fecha de creación de la imagen (automática)
   createdAt: {
     type: Date,
@@ -23,6 +29,6 @@ const imageSchema = new mongoose.Schema({
   }
 });
 
-const Image = mongoose.model('Image', imageSchema);
+const Text = mongoose.model('Text', TextSchema);
 
-module.exports = Image;
+module.exports = Text;
