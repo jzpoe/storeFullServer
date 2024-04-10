@@ -13,7 +13,7 @@ const upload = multer({dest:'uploads'})
 
 router.post('/api/upload', upload.single('image'), async  (req, res) => {
   try {
-    let { description } = req.body;
+    let { description,price,talla } = req.body;
     const bufferStream = req.file.path; // El buffer de la imagen
 
     const result = await cloudinary.uploader.upload(bufferStream, { // Pasar el buffer directamente
@@ -24,17 +24,20 @@ router.post('/api/upload', upload.single('image'), async  (req, res) => {
     console.log('URL de la imagen:', result);
     console.log('ruta fle:', req.file);
 
-    const newImage = new Image({
-      imageUrl: result.url,
-      public_id: result.public_id
+    // const newImage = new Image({
+    //   imageUrl: result.url,
+    //   public_id: result.public_id
 
-    });
+    // });
 
     const newText = new Text({
-      description: description
+      description: description,
+      price: price,
+      talla: talla,
+
     })
     
-    await newImage.save();
+    // await newImage.save();
     await newText.save()
     await fs.unlink(req.file.path)
 

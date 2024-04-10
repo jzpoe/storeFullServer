@@ -42,7 +42,7 @@ cloudinary.config({
                 .execute();
 
                 const textoDescription = await Text.find()
-                
+                    
     
             // Mapear los recursos de Cloudinary a objetos con URL e información adicional
             const imagesData = result.resources.map(resource => {
@@ -56,8 +56,7 @@ cloudinary.config({
             console.log(imagesData); // Solo para depuración
     
             // Devuelve los datos de las imágenes al cliente
-            res.json(imagesData);
-            res.json(textoDescription)
+            res.json({ images: imagesData, text: textoDescription });
         } catch (error) {
             console.error('Error al obtener las imágenes:', error);
             res.status(500).json({ message: 'Error al obtener las imágenes' });

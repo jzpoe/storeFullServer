@@ -4,9 +4,8 @@ const mongoose = require('mongoose');
 
 const TextSchema = new mongoose.Schema({
   // Nombre de la imagen (opcional)
-  name: {
+  imagenPublicId: {
     type: String,
-    required: false
   },
   // Descripción de la imagen (opcional)
   description: {
@@ -14,6 +13,10 @@ const TextSchema = new mongoose.Schema({
     required: false
   },
   price:{
+    type: String,
+    required: false
+  },
+  talla:{
     type: String,
     required: false
   },
