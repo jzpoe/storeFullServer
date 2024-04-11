@@ -8,6 +8,8 @@ const metodPost = require('./src/controllers/controller-update')
 const renderImagenes = require('./src/controllers/controller-get')
 const deleteImages = require('./src/routes/route-post')
 const port = process.env.PORT;
+const mongo= process.env.MONGODB_URI
+
 
 app.use(cors())
 app.use(express.json());
@@ -20,11 +22,14 @@ app.use(metodPost)
 app.use(renderImagenes)
 app.use(deleteImages)
 
-
-
-
-
 app.listen(port, (req, res)=>{
     console.log('conectado al puerto', port)
 })
+
+mongoose.connect(mongo) 
+.then(() => {
+    console.log('Conexión a la base de datos exitosa');
+}).catch((error) => {
+    console.error('Error al conectar a la base de datos:', error);
+});
 
