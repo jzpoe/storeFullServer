@@ -22,7 +22,7 @@ const express = require('express');
 const router = express.Router();
 const cloudinary = require('cloudinary').v2;
 const Text = require("../model/model-text")
-require('dotenv').config({ path: '../.env' });
+//require('dotenv').config({ path: '../.env' });
 
 
 cloudinary.config({

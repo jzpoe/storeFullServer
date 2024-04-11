@@ -1,8 +1,7 @@
 
 const mongoose = require('mongoose');
 
-//console.log('Valor de MONGODB_URI:', process.env.MONGODB_URI);
-mongoose.connect("mongodb+srv://jzpoe:jzpoeluna@task01.iltn4nc.mongodb.net/storeFull", {
+mongoose.connect(process.env.MONGODB_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true
 }).then(() => {
