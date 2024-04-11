@@ -9,13 +9,13 @@ const renderImagenes = require('./src/controllers/controller-get')
 const deleteImages = require('./src/routes/route-post')
 const port = process.env.PORT;
 
+app.use(cors())
 app.use(express.json());
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 //app.use('/profile', express.static(path.join(__dirname, 'profile')));
 
 app.use(express.urlencoded({ extended: true }));
 
-app.use(cors())
 app.use(metodPost)
 app.use(renderImagenes)
 app.use(deleteImages)
