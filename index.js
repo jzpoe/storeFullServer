@@ -26,10 +26,5 @@ app.listen(port, (req, res)=>{
     console.log('conectado al puerto', port)
 })
 
-mongoose.connect(mongo) 
-.then(() => {
-    console.log('Conexión a la base de datos exitosa');
-}).catch((error) => {
-    console.error('Error al conectar a la base de datos:', error);
-});
+
 
